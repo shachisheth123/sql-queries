@@ -1,0 +1,42 @@
+1)mysql> SELECT last_name , d.department_id , department_name
+    -> FROM employees JOIN departments d  ON
+    -> employees.department_id=d.department_id;
+	
+2)mysql> SELECT last-name,hire_date,d.department_name
+    -> FROm employees
+    -> JOIN departments d
+    -> ON employees.department_id=d.department_id WHERE department_name=(SELECT last_name from employees
+    ->                                                                  EXCEPT
+    ->                                                                  SELECT last_name
+    ->                                                                  FROM employees
+    ->                                                                  WHERE last_name='Zlotkey');
+	
+6)mysql> SELECT employee_id , last_name , salary
+    -> FROM employees
+    -> WHERE salary > (SELECT avg(salary)
+    ->                  from employees
+    ->                  )
+    -> ORDER BY salary;
+	
+7)mysql> SELECT employee_id,last_name
+    -> FROM employees
+    -> WHERE last_name IN (SELECT last_name FROM employees WHERE last_name like '%u%')
+    -> GROUP BY department_id;
+	
+8)mysql> SELECT last_name , d.department_id , job_id
+    -> FROM employees JOIN departments d ON
+    -> employees.department_id=d.department_id
+    -> JOIN locations ON d.location_id=locations.location_id IN (SELECT location_id
+    ->                                                                  FROM locations
+    ->                                                                  WHERE location_id=1700);
+Empty set (0.00 sec)
+
+9)mysql> SELECT d.department_id , last_name , job_id , department_name
+    -> from employees JOIN departments d ON
+    -> employees.department_id=d.department_id
+    -> WHERE department_name='Executive';
+	
+10)mysql> SELECT employee_id , last_name, salary
+    -> from employees
+    -> WHERE salary > (SELECT avg(salary)
+    ->                  FROM employees) AND last_name LIKE '%u%';
